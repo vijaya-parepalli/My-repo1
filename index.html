@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Attendance Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f6f9;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    .container {
+      padding: 20px;
+    }
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      text-align: center;
+      padding: 10px;
+    }
+    th {
+      background: #34495e;
+      color: white;
+    }
+    .btn {
+      padding: 6px 12px;
+      background: #3498db;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .btn:hover {
+      background: #2980b9;
+    }
+    .summary {
+      background: #ecf0f1;
+      padding: 15px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📊 College Attendance Dashboard</h1>
+  </header>
+
+  <div class="container">
+    <h2>Student Attendance</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Roll No</th>
+          <th>Name</th>
+          <th>Classes Attended</th>
+          <th>Total Classes</th>
+          <th>Attendance %</th>
+          <th>Mark Attendance</th>
+        </tr>
+      </thead>
+      <tbody id="attendanceTable">
+        <tr>
+          <td>101</td>
+          <td>Aryan</td>
+          <td>20</td>
+          <td>25</td>
+          <td>80%</td>
+          <td><button class="btn" onclick="markAttendance(this)">+1</button></td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>Priya</td>
+          <td>18</td>
+          <td>25</td>
+          <td>72%</td>
+          <td><button class="btn" onclick="markAttendance(this)">+1</button></td>
+        </tr>
+        <tr>
+          <td>103</td>
+          <td>Rohit</td>
+          <td>22</td>
+          <td>25</td>
+          <td>88%</td>
+          <td><button class="btn" onclick="markAttendance(this)">+1</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="summary">
+      <h2>Summary 📌</h2>
+      <p id="summaryText">Average Attendance: 80%</p>
+    </div>
+  </div>
+
+  <script>
+    function markAttendance(button) {
+      let row = button.parentElement.parentElement;
+      let attended = row.cells[2];
+      let total = row.cells[3];
+      let percent = row.cells[4];
+
+      let newAttended = parseInt(attended.innerText) + 1;
+      let newTotal = parseInt(total.innerText) + 1;
+      let newPercent = ((newAttended / newTotal) * 100).toFixed(1) + "%";
+
+      attended.innerText = newAttended;
+      total.innerText = newTotal;
+      percent.innerText = newPercent;
+
+      updateSummary();
+    }
+
+    function updateSummary() {
+      let table = document.getElementById("attendanceTable").rows;
+      let totalPercent = 0;
+
+      for (let i = 0; i < table.length; i++) {
+        let percent = table[i].cells[4].innerText.replace("%", "");
+        totalPercent += parseFloat(percent);
+      }
+
+      let avg = (totalPercent / table.length).toFixed(1);
+      document.getElementById("summaryText").innerText = "Average Attendance: " + avg + "%";
+    }
+  </script>
+</body>
+</html>
